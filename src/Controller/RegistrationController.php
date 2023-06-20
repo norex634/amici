@@ -20,6 +20,9 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'Register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ClasseRepository $classeRepo, SpeRepository $speRepo): Response
     {
+
+        $classe = $classeRepo->findAll();
+        $spe = $speRepo->findAll();
         
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -43,6 +46,8 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'classes' => $classe,
+            'spes' => $spe,
         ]);
 
     }
